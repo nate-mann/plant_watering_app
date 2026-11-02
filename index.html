@@ -3,8 +3,11 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>YourStartup</title>
-  <meta name="description" content="A student startup prototype for BSAD 281.">
+  <title>Sprout - Plant care</title>
+  <meta name="description" content="A calm, practical home for your plant watering routine.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,500;9..144,600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -14,77 +17,150 @@
        Each link points to a "view" further down the page (#home, #explore, #about).
        ========================================================= -->
   <header class="site-header">
-    <a class="brand" href="#home" id="brand-name">YourStartup</a>
-    <nav aria-label="Main">
-      <a href="#home">Home</a>
-      <a href="#explore">Explore</a>
-      <a href="#about">About</a>
+    <a class="brand" href="#dashboard" id="brand-name"><span class="brand-mark" aria-hidden="true">S</span> sprout</a>
+    <nav aria-label="Main navigation">
+      <a href="#dashboard">My plants</a>
+      <a href="#sitters">Plant sitters</a>
+      <a href="#about">Business model</a>
     </nav>
+    <span class="header-note">A little greener, every day</span>
   </header>
 
   <main>
-
-    <!-- =======================================================
-         VIEW 1: HOME — what you do, for whom, and why it matters.
-         ======================================================= -->
-    <section id="home" data-view>
-      <div class="hero">
-        <p class="eyebrow">Prototype</p>
-        <h1 id="tagline">One sentence that says what your startup does.</h1>
-        <p class="lead" id="pitch">
-          Who is your customer, what problem do they have, and why is your
-          solution better than what they use today?
-        </p>
-        <a class="button" href="#explore">See it in action</a>
+    <section id="dashboard" data-view>
+      <div class="dashboard-heading">
+        <div>
+          <p class="eyebrow" id="today-label">YOUR PLANT ROUTINE</p>
+          <h1>Good morning, plant parent.</h1>
+          <p class="lead">A quick look at who needs a drink.</p>
+        </div>
+        <button class="button add-button" type="button" id="open-plant-form"><span aria-hidden="true">+</span> Add a plant</button>
       </div>
 
-      <div class="steps">
-        <div class="card">
-          <h2>1. Step one</h2>
-          <p>Describe the first thing a customer does.</p>
+      <section class="priority-strip" aria-label="Watering overview">
+        <div class="priority-icon" aria-hidden="true">!</div>
+        <div class="priority-copy">
+          <p class="priority-title" id="priority-title">Checking your plants...</p>
+          <p id="priority-detail">Your next watering task will show here.</p>
         </div>
-        <div class="card">
-          <h2>2. Step two</h2>
-          <p>Describe what happens next.</p>
+        <div class="stat-group" aria-label="Plant counts">
+          <div class="stat"><strong id="plant-count">0</strong><span>plants</span></div>
+          <div class="stat"><strong id="due-count">0</strong><span>to water</span></div>
         </div>
-        <div class="card">
-          <h2>3. Step three</h2>
-          <p>Describe the result the customer gets.</p>
+      </section>
+
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">YOUR COLLECTION</p>
+          <h2>Watering priorities</h2>
         </div>
+        <span class="sort-note">Most urgent first</span>
+      </div>
+      <div class="collection-tools" id="collection-tools">
+        <label class="plant-search">
+          <span class="search-icon" aria-hidden="true">⌕</span>
+          <span class="visually-hidden">Search your plants</span>
+          <input type="search" id="plant-search" placeholder="Find a plant, room, or species" autocomplete="off">
+        </label>
+        <div class="filter-switch" role="group" aria-label="Filter plants by watering status">
+          <button type="button" class="filter-button" data-filter="all" aria-pressed="true">All <span id="all-filter-count">0</span></button>
+          <button type="button" class="filter-button" data-filter="due" aria-pressed="false">Needs water <span id="due-filter-count">0</span></button>
+          <button type="button" class="filter-button" data-filter="upcoming" aria-pressed="false">Upcoming <span id="upcoming-filter-count">0</span></button>
+        </div>
+      </div>
+      <p class="results-count" id="results-count" aria-live="polite"></p>
+      <div class="plant-grid" id="plant-grid"></div>
+      <div class="empty-state" id="empty-message" hidden>
+        <span class="empty-leaf" aria-hidden="true">✳</span>
+        <h2>Your plant shelf is waiting</h2>
+        <p>Add your first plant to start a watering routine.</p>
+        <button class="button" type="button" id="empty-add-button">Add a plant</button>
+      </div>
+      <div class="empty-state" id="no-results-message" hidden>
+        <span class="empty-leaf" aria-hidden="true">⌕</span>
+        <h2>No plants match that view</h2>
+        <p>Try another search or show all plants.</p>
+        <button class="button quiet-button" type="button" id="clear-filters">Clear filters</button>
       </div>
     </section>
 
-    <!-- =======================================================
-         VIEW 2: EXPLORE — a list built from the fake data in data.js.
-         ======================================================= -->
-    <section id="explore" data-view hidden>
-      <h1>Explore</h1>
-      <p class="muted">These examples are fake. They come from <code>data.js</code>.</p>
-
-      <label class="search">
-        <span>Search</span>
-        <input type="search" id="search-box" placeholder="Type to filter…">
-      </label>
-
-      <p class="muted" id="saved-count"></p>
-      <div class="grid" id="listing-grid"></div>
-      <p class="empty" id="empty-message" hidden>Nothing matches your search.</p>
+    <section id="sitters" data-view hidden>
+      <div class="page-heading">
+        <p class="eyebrow">CARE WHILE YOU'RE AWAY</p>
+        <h1>Find a plant sitter.</h1>
+        <p class="lead">Local plant people who can keep your leafy friends happy.</p>
+      </div>
+      <div class="sitter-banner">
+        <span class="banner-symbol" aria-hidden="true">↗</span>
+        <p><strong>A future way to earn:</strong> connect plant owners with trusted local sitters, and take a small fee when a booking is completed.</p>
+      </div>
+      <div class="sitter-grid" id="sitter-grid"></div>
+      <p class="prototype-note">Sitter profiles and booking requests are a prototype only. No real services or payments are offered.</p>
     </section>
 
-    <!-- =======================================================
-         VIEW 3: ABOUT — your team and your story.
-         ======================================================= -->
     <section id="about" data-view hidden>
-      <h1>About us</h1>
-      <p>Tell the story of why your team started this company.</p>
-      <p>Use first names only, or no names at all — this site is public.</p>
+      <div class="page-heading">
+        <p class="eyebrow">A THOUGHTFUL BUSINESS</p>
+        <h1>Keep plant care simple.</h1>
+        <p class="lead">The reminder should be free. The extra help can pay for the product.</p>
+      </div>
+      <div class="business-grid">
+        <article class="business-item">
+          <span class="business-number">01</span>
+          <h2>Free plant reminders</h2>
+          <p>Keep the essential job easy to try: organize plants, prioritize watering, and track care. Ads can interrupt a calm routine and are unlikely to earn much before the app has a large audience.</p>
+        </article>
+        <article class="business-item">
+          <span class="business-number">02</span>
+          <h2>Earn on sitter bookings</h2>
+          <p>A later marketplace could charge a transparent service fee on completed bookings. It solves a real problem for travelers, but needs enough trusted owners and sitters in each local area first.</p>
+        </article>
+        <article class="business-item">
+          <span class="business-number">03</span>
+          <h2>Optional paid extras</h2>
+          <p>If people ask for more, test a low-cost plan for shared household access, care history, and custom reminders. Validate demand before building subscriptions or taking payments.</p>
+        </article>
+      </div>
+      <p class="student-note">Student prototype for BSAD 281 at St. Francis Xavier University. Plants, sitter profiles, and booking requests are demo data only.</p>
     </section>
+
+    <dialog id="plant-dialog" aria-labelledby="plant-dialog-title">
+      <form id="plant-form" method="dialog">
+        <div class="dialog-heading">
+          <div><p class="eyebrow" id="plant-dialog-kicker">NEW LEAF</p><h2 id="plant-dialog-title">Add a plant</h2></div>
+          <button class="icon-button" type="button" id="close-plant-form" aria-label="Close">×</button>
+        </div>
+        <label>Plant name<input name="name" required maxlength="40" placeholder="e.g. Fernanda" autocomplete="off"></label>
+        <label>Plant type<input name="species" maxlength="50" placeholder="e.g. Boston fern" autocomplete="off"></label>
+        <div class="form-row">
+          <label>Water every<input name="interval" type="number" min="1" max="90" value="7" required><span class="field-suffix">days</span></label>
+          <label>Last watered<input name="lastWatered" type="date" required></label>
+        </div>
+        <label>Room or spot<input name="location" maxlength="40" placeholder="e.g. Living room" autocomplete="off"></label>
+        <label>Care notes<textarea name="notes" rows="3" maxlength="300" placeholder="Light, humidity, or anything to remember..."></textarea></label>
+        <div class="dialog-actions"><button class="button quiet-button" type="button" id="cancel-plant-form">Cancel</button><button class="button" type="submit" id="save-plant-button">Add plant</button></div>
+      </form>
+    </dialog>
+
+    <dialog id="booking-dialog" aria-labelledby="booking-dialog-title">
+      <form id="booking-form" method="dialog">
+        <div class="dialog-heading">
+          <div><p class="eyebrow">DEMO REQUEST</p><h2 id="booking-dialog-title">Ask about a booking</h2></div>
+          <button class="icon-button" type="button" id="close-booking-form" aria-label="Close">×</button>
+        </div>
+        <p class="form-intro" id="booking-sitter-name"></p>
+        <label>Your name<input name="ownerName" required maxlength="60" autocomplete="name"></label>
+        <label>When do you need help?<input name="dates" required placeholder="e.g. June 12-16"></label>
+        <label>Anything the sitter should know?<textarea name="notes" rows="3" maxlength="300" placeholder="Plant count, access notes, care details..."></textarea></label>
+        <p class="demo-disclaimer">This is a demo. Your request will not be sent to a real sitter.</p>
+        <div class="dialog-actions"><button class="button quiet-button" type="button" id="cancel-booking-form">Cancel</button><button class="button" type="submit">Preview request</button></div>
+      </form>
+    </dialog>
 
   </main>
 
-  <!-- Keep this footer. Your site must say it is a student project. -->
   <footer class="site-footer">
-    <p>Student prototype for BSAD 281 at St. Francis Xavier University. Not a real company — all data is fictional.</p>
+    <p>Sprout is a student prototype for BSAD 281 at St. Francis Xavier University.</p>
   </footer>
 
   <!-- Scripts load in this order: data first, then the code that uses it. -->
